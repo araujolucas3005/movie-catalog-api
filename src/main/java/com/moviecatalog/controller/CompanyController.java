@@ -43,6 +43,16 @@ public class CompanyController {
 		return compServ.save(company);
 	}
 	
+	@PostMapping("/company/{id}/add_movie")
+	public ResponseEntity<Void> addMovie(@PathVariable Integer id, @RequestBody Movie movie) {
+		return compServ.addMovie(id, movie);
+	}
+	
+	@PostMapping("/company/{id}/add_movies")
+	public ResponseEntity<Void> addMovies(@PathVariable Integer id, @RequestBody Set<Movie> movies) {
+		return compServ.addMovies(id, movies);
+	}
+	
 	@PutMapping("/company/{id}")
 	public ResponseEntity<Company> update(@PathVariable Integer id, @RequestBody Company company) {
 		return compServ.update(id, company);

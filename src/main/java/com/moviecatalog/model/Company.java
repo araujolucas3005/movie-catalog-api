@@ -59,6 +59,20 @@ public class Company implements BaseModel<Company> {
 		}
 	}
 	
+	public void addMovie(Movie movie) {
+		if (movie != null) {
+			movie.setCompany(this);
+			this.movies.add(movie);
+		}
+	}
+	
+	public void addMovies(Set<Movie> movies) {
+		if (movies != null) {
+			movies.forEach(movie -> movie.setCompany(this));
+			this.movies.addAll(movies);
+		}
+	}
+	
 	public void update(Company source) {
 		if (source != null) {
 			this.setMovies(source.getMovies());

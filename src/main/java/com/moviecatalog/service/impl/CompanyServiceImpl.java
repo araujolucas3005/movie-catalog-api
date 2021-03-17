@@ -24,5 +24,25 @@ public class CompanyServiceImpl extends BaseServiceImpl<Company, CompanyReposito
 		}
 		return ResponseEntity.ok(company.get().getMovies());
 	}
+
+	public ResponseEntity<Void> addMovie(Integer id, Movie movie) {
+		Optional<Company> company = compRepo.findById(id);
+		if (!company.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		company.get().addMovie(movie);
+		compRepo.save(company.get());
+		return ResponseEntity.noContent().build();
+	}
+
+	public ResponseEntity<Void> addMovies(Integer id, Set<Movie> movies) {
+		Optional<Company> company = compRepo.findById(id);
+		if (!company.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		company.get().addMovies(movies);
+		compRepo.save(company.get());
+		return ResponseEntity.noContent().build();
+	}
 	
 }
