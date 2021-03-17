@@ -101,9 +101,9 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 
 	public void update(Genre source) {
 		if (source != null) {
-			source.setName(source.getName());
-			source.setParentGenre(source.getParentGenre());
-			source.setSubgenres(source.getSubgenres());
+			this.setName(source.getName());
+			this.setParentGenre(source.getParentGenre());
+			this.setSubgenres(source.getSubgenres());
 		}
 	}
 	
