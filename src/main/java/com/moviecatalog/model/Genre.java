@@ -58,9 +58,7 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	}
 
 	public void setName(String name) {
-		if (name != null) {
-			this.name = name;
-		}
+		this.name = name != null ? name : this.name;
 	}
 
 	public Genre getParentGenre() {
@@ -68,9 +66,7 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	}
 
 	public void setParentGenre(Genre parentGenre) {
-		if (parentGenre != null) {
-			this.parentGenre = parentGenre;
-		}
+		this.parentGenre = parentGenre != null ? parentGenre : this.parentGenre;
 	}
 
 	public Set<Genre> getSubgenres() {
@@ -92,7 +88,10 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	}
 
 	public void setMovies(Set<Movie> movies) {
-		this.movies = movies;
+		if (movies != null) {
+			movies.forEach(movie -> movie.setGenre(this));
+			this.movies = movies;
+		}
 	}
 
 	public void addSubgenre(Genre subgenre) {
@@ -103,10 +102,7 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	}
 
 	public int compareTo(Genre other) {
-		if (this.id != null) {
-			return id.compareTo(other.getId());
-		}
-		return 1;
+		return this.id != null ? id.compareTo(other.getId()) : 1;
 	}
 
 	public void update(Genre source) {
