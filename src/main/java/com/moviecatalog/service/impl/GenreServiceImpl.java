@@ -29,5 +29,15 @@ public class GenreServiceImpl extends BaseServiceImpl<Genre, GenreRepository> im
 		}
 		return ResponseEntity.ok(genre.get().getMovies());
 	}
+
+	public ResponseEntity<Void> addSubgenre(Integer id, Genre subgenre) {
+		Optional<Genre> genre = genreRepo.findById(id);
+		if (!genre.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		genre.get().addSubgenre(subgenre);
+		genreRepo.save(genre.get());
+		return ResponseEntity.noContent().build();
+	}
 	
 }

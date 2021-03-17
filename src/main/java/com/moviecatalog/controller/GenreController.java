@@ -43,6 +43,11 @@ public class GenreController {
 		return genreServ.save(genre);
 	}
 	
+	@PostMapping("/genre/{id}/add_subgenre")
+	public ResponseEntity<Void> addSubgenre(@PathVariable Integer id, @RequestBody Genre subgenre) {
+		return genreServ.addSubgenre(id, subgenre);
+	}
+	
 	@PutMapping("/genre/{id}")
 	public ResponseEntity<Genre> save(@PathVariable Integer id, @RequestBody Genre genre) {
 		return genreServ.update(id, genre);

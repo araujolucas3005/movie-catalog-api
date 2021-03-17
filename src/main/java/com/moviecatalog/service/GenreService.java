@@ -13,5 +13,7 @@ public interface GenreService extends BaseService<Genre> {
 	public List<Genre> findAllParents();
 	
 	public ResponseEntity<Set<Movie>> findAllMovies(Integer id);
+	
+	public ResponseEntity<Void> addSubgenre(Integer id, Genre subgenre);
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -38,7 +39,7 @@ public class Movie implements BaseModel<Movie> {
 	private Company company;
 	
 	@ManyToOne(optional = false)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonIgnoreProperties(value = {"subgenres", "parentGenre", "movies"})
 	private Genre genre;
 
 	public Integer getId() {

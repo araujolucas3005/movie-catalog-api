@@ -9,7 +9,7 @@ import com.moviecatalog.model.Genre;
 
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
 	
-	@Query("select g from Genre g where g.parentGenre is null")
+	@Query("select g from Genre g where g.parentGenre is null order by id")
 	public List<Genre> findAllParents();
 	
 }

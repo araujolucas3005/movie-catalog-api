@@ -35,12 +35,12 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	@ManyToOne
 	@JsonBackReference
 	private Genre parentGenre;
-	
+
 	@SortNatural
 	@JsonManagedReference
 	@OneToMany(mappedBy = "parentGenre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Genre> subgenres = new TreeSet<>();
-	
+
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Movie> movies = new HashSet<>();
@@ -95,8 +95,18 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 		this.movies = movies;
 	}
 
+	public void addSubgenre(Genre subgenre) {
+		if (subgenre != null) {
+			subgenre.setParentGenre(this);
+			this.subgenres.add(subgenre);
+		}
+	}
+
 	public int compareTo(Genre other) {
-		return Integer.compare(this.getId(), other.getId());
+		if (this.id != null) {
+			return id.compareTo(other.getId());
+		}
+		return 1;
 	}
 
 	public void update(Genre source) {
@@ -106,7 +116,7 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 			this.setSubgenres(source.getSubgenres());
 		}
 	}
-	
+
 	private void getMoviesFromChildren(Set<Genre> subgenres) {
 		if (!subgenres.isEmpty()) {
 			subgenres.forEach(subgenre -> {
