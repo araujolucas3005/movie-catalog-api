@@ -36,6 +36,10 @@ public class Movie implements BaseModel<Movie> {
 	@ManyToOne(optional = false)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Company company;
+	
+	@ManyToOne(optional = false)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Genre genre;
 
 	public Integer getId() {
 		return id;
@@ -83,6 +87,16 @@ public class Movie implements BaseModel<Movie> {
 
 	public void setCompany(Company company) {
 		this.company = company != null ? company : this.company;
+	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		if (genre != null) {
+			this.genre = genre;
+		}
 	}
 
 	public void update(Movie source) {
