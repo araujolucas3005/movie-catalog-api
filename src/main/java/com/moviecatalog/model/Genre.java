@@ -2,6 +2,7 @@ package com.moviecatalog.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
@@ -39,7 +40,7 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 	@SortNatural
 	@JsonManagedReference
 	@OneToMany(mappedBy = "parentGenre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Genre> subgenres = new TreeSet<>();
+	private SortedSet<Genre> subgenres = new TreeSet<>();
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "genre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -69,14 +70,14 @@ public class Genre implements BaseModel<Genre>, Comparable<Genre> {
 		this.parentGenre = parentGenre != null ? parentGenre : this.parentGenre;
 	}
 
-	public Set<Genre> getSubgenres() {
+	public SortedSet<Genre> getSubgenres() {
 		return subgenres;
 	}
 
-	public void setSubgenres(Set<Genre> subgenres) {
-		if (subgenres != null) {
-			subgenres.forEach(subgenre -> subgenre.setParentGenre(this));
-			this.subgenres = subgenres;
+	public void setSubgenres(SortedSet<Genre> set) {
+		if (set != null) {
+			set.forEach(subgenre -> subgenre.setParentGenre(this));
+			this.subgenres = set;
 		}
 	}
 
