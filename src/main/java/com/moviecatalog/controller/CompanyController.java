@@ -44,7 +44,7 @@ public class CompanyController {
 	}
 	
 	@PutMapping("/company/{id}")
-	public ResponseEntity<Company> save(@PathVariable Integer id, @RequestBody Company company) {
+	public ResponseEntity<Company> update(@PathVariable Integer id, @RequestBody Company company) {
 		return compServ.update(id, company);
 	}
 	
