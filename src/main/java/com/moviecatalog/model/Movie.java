@@ -1,15 +1,10 @@
 package com.moviecatalog.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,6 +32,11 @@ public class Movie implements BaseModel<Movie> {
 	@ManyToOne(optional = false)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Company company;
+
+
+	@ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Set<Actor> actors = new HashSet<>();
 	
 	@ManyToOne(optional = false)
 	@JsonIgnoreProperties(value = {"subgenres", "parentGenre", "movies"})
@@ -88,6 +88,28 @@ public class Movie implements BaseModel<Movie> {
 
 	public void setCompany(Company company) {
 		this.company = company != null ? company : this.company;
+	}
+
+	public Set<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(Set<Actor> actors) {
+		this.actors = actors != null ? actors : this.actors;
+	}
+
+	public void addActor(Actor actor) {
+		if (actor != null) {
+			actor.setMovies((Set<Movie>) this);
+			this.actors.add(actor);
+		}
+	}
+
+	public void addActors(Set<Actor> actors) {
+		if (actors != null) {
+			actors.forEach(movie -> movie.setMovies((Set<Movie>) this));
+			this.actors.addAll(actors);
+		}
 	}
 
 	public Genre getGenre() {

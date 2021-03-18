@@ -1,7 +1,10 @@
 package com.moviecatalog.controller;
 
 import java.util.List;
+import java.util.Set;
 
+import com.moviecatalog.model.Actor;
+import com.moviecatalog.model.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +47,16 @@ public class MovieController {
 	@DeleteMapping("/movie/{id}")
 	public ResponseEntity<Void> destroy(@PathVariable Integer id) {
 		return movieServ.delete(id);
+	}
+
+	@GetMapping("/movie/{id}/cast")
+	public ResponseEntity<Set<Actor>> findAllActors(@PathVariable Integer id) {
+		return movieServ.findAllActors(id);
+	}
+
+	@PostMapping("/movie/{id}/add_actor")
+	public ResponseEntity<Void> addActor(@PathVariable Integer id, @RequestBody Actor actor) {
+		return movieServ.addActor(id, actor);
 	}
 
 }
