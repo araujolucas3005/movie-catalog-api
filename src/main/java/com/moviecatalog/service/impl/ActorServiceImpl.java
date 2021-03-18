@@ -7,10 +7,12 @@ import com.moviecatalog.repository.ActorRepository;
 import com.moviecatalog.service.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
 
+@Service
 public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> implements ActorService {
 
     @Autowired private ActorRepository actRepo;

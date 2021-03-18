@@ -1,7 +1,6 @@
 package com.moviecatalog.service;
 
 import com.moviecatalog.model.Actor;
-import com.moviecatalog.model.Genre;
 import com.moviecatalog.model.Movie;
 import org.springframework.http.ResponseEntity;
 
@@ -13,6 +12,6 @@ public interface MovieService extends BaseService<Movie> {
 
     public ResponseEntity<Void> addActor(Integer id, Actor actor);
 
-    public ResponseEntity<Void> addActors(Integer id, Set<Actor> actors);
+   public ResponseEntity<Void> addActors(Integer id, Set<Actor> actors);
 
 }

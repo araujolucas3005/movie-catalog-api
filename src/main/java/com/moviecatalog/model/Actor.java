@@ -23,8 +23,8 @@ public class Actor implements BaseModel<Actor> {
 
     @ManyToMany
     @JoinTable(name="movies_actors", joinColumns=
-            {@JoinColumn(name="movie_id")}, inverseJoinColumns=
-            {@JoinColumn(name="actor_id")})
+            {@JoinColumn(name="actor_id")}, inverseJoinColumns=
+            {@JoinColumn(name="movie_id")})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Movie> movies = new HashSet<>();
 
@@ -63,9 +63,14 @@ public class Actor implements BaseModel<Actor> {
         }
     }
 
+    public void setMovie(Movie movie) {
+        if (movie != null) {
+            this.movies = (Set<Movie>) movie;
+        }
+    }
+
     public void update(Actor source) {
         if (source != null) {
-            this.setMovies(source.getMovies());
             this.setFirstName(source.getFirstName());
             this.setLastName(source.getLastName());
         }

@@ -33,7 +33,6 @@ public class Movie implements BaseModel<Movie> {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Company company;
 
-
 	@ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Set<Actor> actors = new HashSet<>();
@@ -100,14 +99,14 @@ public class Movie implements BaseModel<Movie> {
 
 	public void addActor(Actor actor) {
 		if (actor != null) {
-			actor.setMovies((Set<Movie>) this);
+			actor.setMovie((Movie) this);
 			this.actors.add(actor);
 		}
 	}
 
 	public void addActors(Set<Actor> actors) {
 		if (actors != null) {
-			actors.forEach(movie -> movie.setMovies((Set<Movie>) this));
+			actors.forEach(actor -> actor.setMovies((Set<Movie>) this));
 			this.actors.addAll(actors);
 		}
 	}
@@ -129,6 +128,7 @@ public class Movie implements BaseModel<Movie> {
 			this.setPosterPath(source.getPosterPath());
 			this.setReleaseDate(source.getReleaseDate());
 			this.setSynopsis(source.getSynopsis());
+			this.setActors(source.getActors());
 		}
 	}
 	
