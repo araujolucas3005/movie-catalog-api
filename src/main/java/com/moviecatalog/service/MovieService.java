@@ -12,6 +12,4 @@ public interface MovieService extends BaseService<Movie> {
 
     public ResponseEntity<Void> addActor(Integer id, Actor actor);
 
-   public ResponseEntity<Void> addActors(Integer id, Set<Actor> actors);
-
 }

@@ -54,8 +54,8 @@ public class MovieController {
 	}
 
 	@PostMapping("/movie/{id}/add_actor")
-	public ResponseEntity<Void> addActor(@PathVariable Integer id, @RequestBody Set<Actor> actors) {
-		return movieServ.addActors(id, actors);
+	public ResponseEntity<Void> addActor(@PathVariable Integer id, @RequestBody Actor actor) {
+		return movieServ.addActor(id, actor);
 	}
 
 }

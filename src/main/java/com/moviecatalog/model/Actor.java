@@ -64,9 +64,9 @@ public class Actor implements BaseModel<Actor> {
     }
 
     public void setMovie(Movie movie) {
-        if (movie != null) {
-            this.movies = (Set<Movie>) movie;
-        }
+        Set<Movie> movies1 = new HashSet<>();
+        movies1.add(movie);
+        this.movies = movies1 != null ? movies1 : this.movies;
     }
 
     public void update(Actor source) {
