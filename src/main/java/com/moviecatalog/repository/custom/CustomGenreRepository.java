@@ -9,5 +9,7 @@ public interface CustomGenreRepository {
 	public LinkedListInter<Genre> findAllSubgenres(Integer id);
 	
 	public LinkedListInter<Movie> findAllMovies(Integer id);
+	
+	public LinkedListInter<Genre> findAllAsLinkedList();
 
 }

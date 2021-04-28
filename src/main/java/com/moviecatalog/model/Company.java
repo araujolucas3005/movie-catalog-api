@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "companies")
-public class Company implements BaseModel<Company> {
+public class Company implements BaseModel<Company>, JSONEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COMPANY")
@@ -40,6 +40,14 @@ public class Company implements BaseModel<Company> {
 		if (source != null) {
 			this.setName(source.getName());
 		}
+	}
+
+	@Override
+	public String toJSONString() {
+		return "{" +
+				"\"id\":" + this.id +
+				",\"name\":" + '"' + this.name + '"' +
+				"}";
 	}
 
 }

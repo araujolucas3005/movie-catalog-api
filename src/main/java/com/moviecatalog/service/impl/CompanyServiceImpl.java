@@ -27,5 +27,10 @@ public class CompanyServiceImpl extends BaseServiceImpl<Company, CompanyReposito
 		LinkedListInter<Movie> movies = compRepo.findAllMovies(id);
 		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
+
+	@Override
+	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
+		return compRepo.findAllAsLinkedList().formatToJSONObject();
+	}
 	
 }
