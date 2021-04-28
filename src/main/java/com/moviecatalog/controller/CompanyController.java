@@ -1,7 +1,5 @@
 package com.moviecatalog.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,8 +22,8 @@ public class CompanyController {
 	private CompanyService compServ;
 	
 	@GetMapping("/companies")
-	public List<Company> index() {
-		return compServ.findAll();
+	public Object index() throws JsonMappingException, JsonProcessingException {
+		return compServ.findAllAsLinkedList();
 	}
 	
 	@GetMapping("/company/{id}")

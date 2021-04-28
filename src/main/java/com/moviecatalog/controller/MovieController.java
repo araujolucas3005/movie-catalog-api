@@ -1,7 +1,5 @@
 package com.moviecatalog.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.model.Movie;
 import com.moviecatalog.service.MovieService;
 
@@ -23,8 +23,8 @@ public class MovieController {
 	private MovieService movieServ;
 	
 	@GetMapping("/movies")
-	public List<Movie> index() {
-		return movieServ.findAll();
+	public Object index() throws JsonMappingException, JsonProcessingException {
+		return movieServ.findAllAsLinkedList();
 	}
 	
 	@GetMapping("/movie/{id}")

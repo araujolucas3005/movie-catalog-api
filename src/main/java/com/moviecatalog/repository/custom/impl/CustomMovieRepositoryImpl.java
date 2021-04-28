@@ -4,23 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.custom.structures.StackInter;
+import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
 import com.moviecatalog.custom.structures.impl.SinglyLinkedStack;
 import com.moviecatalog.model.Movie;
 import com.moviecatalog.repository.custom.CustomMovieRepository;
 
 public class CustomMovieRepositoryImpl implements CustomMovieRepository {
-	
-	@Autowired JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 	@Override
 	public StackInter<Movie> findAllAsStackOrderedByDateDesc() {
 		String query = "select * from movies m order by m.release_date desc";
-		
+
 		StackInter<Movie> movies = new SinglyLinkedStack<>();
-		
+
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
-		
+
 		while (rs.next()) {
 			Movie movie = new Movie();
 			movie.setCompanyId(rs.getInt("company_id"));
@@ -31,7 +34,29 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 			movie.setSynopsis(rs.getString("synopsis"));
 			movies.push(movie);
 		}
-		
+
+		return movies;
+	}
+
+	@Override
+	public LinkedListInter<Movie> findAllAsLinkedList() {
+		String query = "select * from movies";
+
+		LinkedListInter<Movie> movies = new SinglyLinkedList<>();
+
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
+
+		while (rs.next()) {
+			Movie movie = new Movie();
+			movie.setCompanyId(rs.getInt("company_id"));
+			movie.setGenreId(rs.getInt("genre_id"));
+			movie.setId(rs.getInt("id"));
+			movie.setName(rs.getString("name"));
+			movie.setReleaseDate(rs.getDate("release_date"));
+			movie.setSynopsis(rs.getString("synopsis"));
+			movies.add(movie);
+		}
+
 		return movies;
 	}
 

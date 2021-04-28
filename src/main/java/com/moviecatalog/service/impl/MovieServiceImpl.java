@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.custom.structures.StackInter;
 import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
@@ -30,6 +32,11 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 		}
 		
 		return ResponseEntity.ok(deletedMovies.formatToJSONObject());
+	}
+
+	@Override
+	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
+		return movieRepo.findAllAsLinkedList().formatToJSONObject();
 	}
 
 }

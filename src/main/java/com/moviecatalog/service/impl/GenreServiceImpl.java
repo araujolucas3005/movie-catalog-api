@@ -38,5 +38,10 @@ public class GenreServiceImpl extends BaseServiceImpl<Genre, GenreRepository> im
 		LinkedListInter<Movie> movies = genreRepo.findAllMovies(id);
 		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
+
+	@Override
+	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
+		return genreRepo.findAllAsLinkedList().formatToJSONObject();
+	}
 	
 }

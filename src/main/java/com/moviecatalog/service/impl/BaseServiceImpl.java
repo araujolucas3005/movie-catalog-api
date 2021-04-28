@@ -1,7 +1,5 @@
 package com.moviecatalog.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +9,6 @@ import com.moviecatalog.model.BaseModel;
 public abstract class BaseServiceImpl<T extends BaseModel<T>, Repository extends JpaRepository<T, Integer>> {
 	
 	@Autowired private Repository repo;
-	
-	public List<T> findAll() {
-		return repo.findAll();
-	}
 	
 	public ResponseEntity<T> findById(Integer id) {
 		return repo.findById(id).map(entity -> ResponseEntity.ok(entity))
@@ -40,6 +34,4 @@ public abstract class BaseServiceImpl<T extends BaseModel<T>, Repository extends
 		return ResponseEntity.noContent().build();
 	}
 	
-	
-
 }	

@@ -9,6 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -23,6 +26,7 @@ public class Genre implements BaseModel<Genre>, JSONEntity {
 	private String name;
 
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Genre parentGenre;
 
