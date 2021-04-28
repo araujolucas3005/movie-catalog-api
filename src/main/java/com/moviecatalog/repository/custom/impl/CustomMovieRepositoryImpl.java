@@ -14,7 +14,7 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 	@Autowired JdbcTemplate jdbcTemplate;
 
 	@Override
-	public StackInter<Movie> findOldestsAsStack() {
+	public StackInter<Movie> findAllAsStackOrderedByDateDesc() {
 		String query = "select * from movies m order by m.release_date desc";
 		
 		StackInter<Movie> movies = new SinglyLinkedStack<>();

@@ -5,6 +5,6 @@ import com.moviecatalog.model.Movie;
 
 public interface CustomMovieRepository {
 	
-	public StackInter<Movie> findOldestsAsStack();
+	public StackInter<Movie> findAllAsStackOrderedByDateDesc();
 
 }

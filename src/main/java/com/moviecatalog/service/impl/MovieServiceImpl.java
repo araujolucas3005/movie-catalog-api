@@ -18,7 +18,7 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 
 	@Override
 	public ResponseEntity<Object> removeOldests(Integer quantity) throws Exception {
-		StackInter<Movie> movies = movieRepo.findOldestsAsStack();
+		StackInter<Movie> movies = movieRepo.findAllAsStackOrderedByDateDesc();
 		
 		LinkedListInter<Movie> deletedMovies = new SinglyLinkedList<>();
 		
