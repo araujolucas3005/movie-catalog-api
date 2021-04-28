@@ -1,7 +1,6 @@
 package com.moviecatalog.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.model.Genre;
-import com.moviecatalog.model.Movie;
 import com.moviecatalog.service.GenreService;
 
 @RestController
@@ -25,7 +25,7 @@ public class GenreController {
 	
 	@GetMapping("/genres")
 	public List<Genre> index() {
-		return genreServ.findAllParents();
+		return genreServ.findAll();
 	}
 	
 	@GetMapping("/genre/{id}")
@@ -33,19 +33,19 @@ public class GenreController {
 		return genreServ.findById(id);
 	}
 	
+	@GetMapping("/genre/{id}/subgenres")
+	public ResponseEntity<Object> findAllSubgenres(@PathVariable Integer id) throws JsonMappingException, JsonProcessingException {
+		return genreServ.findAllSubgenres(id);
+	}
+	
 	@GetMapping("/genre/{id}/movies")
-	public ResponseEntity<Set<Movie>> findAllMovies(@PathVariable Integer id) {
+	public ResponseEntity<Object> findAllMovies(@PathVariable Integer id) throws JsonMappingException, JsonProcessingException {
 		return genreServ.findAllMovies(id);
 	}
 	
 	@PostMapping("/genre")
 	public ResponseEntity<Genre> save(@RequestBody Genre genre) {
 		return genreServ.save(genre);
-	}
-	
-	@PostMapping("/genre/{id}/add_subgenre")
-	public ResponseEntity<Void> addSubgenre(@PathVariable Integer id, @RequestBody Genre subgenre) {
-		return genreServ.addSubgenre(id, subgenre);
 	}
 	
 	@PutMapping("/genre/{id}")
