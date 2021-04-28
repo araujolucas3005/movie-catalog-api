@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviecatalog.custom.structures.LinkedListInter;
-import com.moviecatalog.model.JSONEntity;
+import com.moviecatalog.model.BaseModel;
 
-public class SinglyLinkedList<T extends JSONEntity> implements LinkedListInter<T> {
+public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter<T> {
 	
 	public class Node {
 		

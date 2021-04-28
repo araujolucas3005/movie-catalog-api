@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "genres")
-public class Genre implements BaseModel<Genre>, JSONEntity {
+public class Genre implements BaseModel<Genre> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENRE")
