@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.moviecatalog.model.Movie;
@@ -44,6 +45,11 @@ public class MovieController {
 	@DeleteMapping("/movie/{id}")
 	public ResponseEntity<Void> destroy(@PathVariable Integer id) {
 		return movieServ.delete(id);
+	}
+	
+	@DeleteMapping("/movie/remove/oldests")
+	public ResponseEntity<Object> removeOldests(@RequestParam(defaultValue = "0") Integer quantity) throws Exception {
+		return movieServ.removeOldests(quantity);
 	}
 
 }

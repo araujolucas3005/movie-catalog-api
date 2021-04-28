@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
-import com.moviecatalog.custom.structures.LinkedListInter;
-import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
+import com.moviecatalog.custom.structures.StackInter;
+import com.moviecatalog.custom.structures.impl.SinglyLinkedStack;
 import com.moviecatalog.model.Movie;
-import com.moviecatalog.repository.custom.CustomCompanyRepository;
+import com.moviecatalog.repository.custom.CustomMovieRepository;
 
-public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
+public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 	
 	@Autowired JdbcTemplate jdbcTemplate;
 
 	@Override
-	public LinkedListInter<Movie> findAllMovies(Integer id) {
-		String query = "select * from movies m where m.company_id = " + id;
+	public StackInter<Movie> findAllAsStackOrderedByDateDesc() {
+		String query = "select * from movies m order by m.release_date desc";
 		
-		LinkedListInter<Movie> movies = new SinglyLinkedList<>();
+		StackInter<Movie> movies = new SinglyLinkedStack<>();
 		
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
 		
@@ -29,7 +29,7 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 			movie.setName(rs.getString("name"));
 			movie.setReleaseDate(rs.getDate("release_date"));
 			movie.setSynopsis(rs.getString("synopsis"));
-			movies.add(movie);
+			movies.push(movie);
 		}
 		
 		return movies;
