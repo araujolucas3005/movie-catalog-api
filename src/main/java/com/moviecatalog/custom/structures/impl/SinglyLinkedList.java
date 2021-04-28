@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.model.JSONEntity;
 
-public class SimplyLinkedList<T extends JSONEntity> implements LinkedListInter<T> {
+public class SinglyLinkedList<T extends JSONEntity> implements LinkedListInter<T> {
 	
 	public class Node {
 		
@@ -30,7 +30,7 @@ public class SimplyLinkedList<T extends JSONEntity> implements LinkedListInter<T
 	
 	private int size;
 
-	public SimplyLinkedList() {
+	public SinglyLinkedList() {
 		
 		this.head = this.tail = null;
 		

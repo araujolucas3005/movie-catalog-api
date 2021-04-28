@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.moviecatalog.custom.structures.LinkedListInter;
-import com.moviecatalog.custom.structures.impl.SimplyLinkedList;
+import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
 import com.moviecatalog.model.Genre;
 import com.moviecatalog.model.Movie;
 import com.moviecatalog.repository.custom.CustomGenreRepository;
@@ -18,7 +18,7 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 	public LinkedListInter<Genre> findAllSubgenres(Integer id) {
 		String query = "select * from genres g where g.parent_genre_id = " + id;
 		
-		LinkedListInter<Genre> subgenres = new SimplyLinkedList<>();
+		LinkedListInter<Genre> subgenres = new SinglyLinkedList<>();
 		
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
 		
@@ -37,7 +37,7 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 	public LinkedListInter<Movie> findAllMovies(Integer id) {
 		String query = "select * from movies m where m.genre_id = " + id;
 		
-		LinkedListInter<Movie> movies = new SimplyLinkedList<>();
+		LinkedListInter<Movie> movies = new SinglyLinkedList<>();
 		
 		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
 		
