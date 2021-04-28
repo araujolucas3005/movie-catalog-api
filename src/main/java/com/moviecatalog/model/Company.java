@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "companies")
-public class Company implements BaseModel<Company>, JSONEntity {
+public class Company implements BaseModel<Company> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COMPANY")

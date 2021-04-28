@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Entity
 @Table(name = "movies")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Movie implements BaseModel<Movie>, JSONEntity {
+public class Movie implements BaseModel<Movie> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MOVIE")
