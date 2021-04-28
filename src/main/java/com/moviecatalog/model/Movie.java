@@ -11,12 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "movies")
-public class Movie implements BaseModel<Movie> {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Movie implements BaseModel<Movie>, JSONEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MOVIE")
@@ -31,6 +33,7 @@ public class Movie implements BaseModel<Movie> {
 	
 	private String posterPath;
 	
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(nullable = false)
 	private Date releaseDate;
 	
@@ -39,8 +42,14 @@ public class Movie implements BaseModel<Movie> {
 	private Company company;
 	
 	@ManyToOne(optional = false)
-	@JsonIgnoreProperties(value = {"subgenres", "parentGenre", "movies"})
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Genre genre;
+	
+	@Column(name = "company_id", insertable = false, updatable = false)
+	private Integer companyId;
+	
+	@Column(name = "genre_id", insertable = false, updatable = false)
+	private Integer genreId;
 
 	public Integer getId() {
 		return id;
@@ -108,6 +117,33 @@ public class Movie implements BaseModel<Movie> {
 			this.setReleaseDate(source.getReleaseDate());
 			this.setSynopsis(source.getSynopsis());
 		}
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public Integer getGenreId() {
+		return genreId;
+	}
+
+	public void setGenreId(Integer genreId) {
+		this.genreId = genreId;
+	}
+	
+	public String toJSONString() {
+		return "{" +
+				"\"id\":" + this.id +
+				",\"name\":" + '"' + this.name + '"' +
+				",\"synopsis\":" + '"' + this.synopsis + '"' +
+				",\"releaseDate\":" + '"' + this.releaseDate + '"' +
+				",\"companyId\":" + this.companyId +
+				",\"genreId\":" + this.genreId +
+				"}";
 	}
 	
 }

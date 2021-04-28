@@ -1,7 +1,6 @@
 package com.moviecatalog.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.model.Company;
-import com.moviecatalog.model.Movie;
 import com.moviecatalog.service.CompanyService;
 
 @RestController
@@ -34,23 +34,13 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/company/{id}/movies")
-	public ResponseEntity<Set<Movie>> findAllMovies(@PathVariable Integer id) {
+	public ResponseEntity<Object> findAllMovies(@PathVariable Integer id) throws JsonMappingException, JsonProcessingException {
 		return compServ.findAllMovies(id);
 	}
 	
 	@PostMapping("/company")
 	public ResponseEntity<Company> save(@RequestBody Company company) {
 		return compServ.save(company);
-	}
-	
-	@PostMapping("/company/{id}/add_movie")
-	public ResponseEntity<Void> addMovie(@PathVariable Integer id, @RequestBody Movie movie) {
-		return compServ.addMovie(id, movie);
-	}
-	
-	@PostMapping("/company/{id}/add_movies")
-	public ResponseEntity<Void> addMovies(@PathVariable Integer id, @RequestBody Set<Movie> movies) {
-		return compServ.addMovies(id, movies);
 	}
 	
 	@PutMapping("/company/{id}")
