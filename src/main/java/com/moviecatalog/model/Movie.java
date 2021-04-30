@@ -34,8 +34,6 @@ public class Movie implements BaseModel<Movie> {
 	@Column(nullable = false)
 	private String synopsis;
 	
-	private String posterPath;
-	
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(nullable = false)
 	private Date releaseDate;
@@ -80,14 +78,6 @@ public class Movie implements BaseModel<Movie> {
 		this.synopsis = synopsis != null ? synopsis : this.synopsis;
 	}
 
-	public String getPosterPath() {
-		return posterPath;
-	}
-
-	public void setPosterPath(String posterPath) {
-		this.posterPath = posterPath != null ? posterPath : this.posterPath;
-	}
-
 	public Date getReleaseDate() {
 		return releaseDate;
 	}
@@ -118,7 +108,6 @@ public class Movie implements BaseModel<Movie> {
 		if (source != null) {
 			this.setCompany(source.getCompany());
 			this.setName(source.getName());
-			this.setPosterPath(source.getPosterPath());
 			this.setReleaseDate(source.getReleaseDate());
 			this.setSynopsis(source.getSynopsis());
 		}

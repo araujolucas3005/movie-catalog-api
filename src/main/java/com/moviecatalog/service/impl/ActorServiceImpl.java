@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.custom.structures.LinkedListInter;
-import com.moviecatalog.custom.structures.StackInter;
-import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
 import com.moviecatalog.model.Actor;
 import com.moviecatalog.model.ActorMovie;
 import com.moviecatalog.model.ActorMovieId;
@@ -18,11 +16,11 @@ import com.moviecatalog.model.Movie;
 import com.moviecatalog.repository.ActorMovieRepository;
 import com.moviecatalog.repository.ActorRepository;
 import com.moviecatalog.repository.MovieRepository;
-import com.moviecatalog.service.MovieService;
+import com.moviecatalog.service.ActorService;
 import com.moviecatalog.util.IdForAssociation;
 
 @Service
-public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> implements MovieService {
+public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> implements ActorService {
 	
 	@Autowired private ActorRepository actorRepo;
 	
@@ -31,30 +29,14 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 	@Autowired private ActorMovieRepository actorMovieRepo;
 
 	@Override
-	public ResponseEntity<Object> removeOldests(Integer quantity) throws Exception {
-		StackInter<Movie> movies = movieRepo.findAllAsStackOrderedByDateDesc();
-		
-		LinkedListInter<Movie> deletedMovies = new SinglyLinkedList<>();
-		
-		while (!movies.isEmpty() && quantity > 0) {
-			Movie deletedMovie = movies.pop();
-			deletedMovies.add(deletedMovie);
-			movieRepo.deleteById(deletedMovie.getId());
-			quantity--;
-		}
-		
-		return ResponseEntity.ok(deletedMovies.formatToJSONObject());
-	}
-
-	@Override
 	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
-		return movieRepo.findAllAsLinkedList().formatToJSONObject();
+		return actorRepo.findAllAsLinkedList().formatToJSONObject();
 	}
-
+	
 	@Override
-	public ResponseEntity<Object> addActor(Integer movieId, IdForAssociation actorId) {
-		Optional<Actor> actor = actorRepo.findById(actorId.getId());
-		Optional<Movie> movie = movieRepo.findById(movieId);
+	public ResponseEntity<Object> addMovie(Integer actorId, IdForAssociation movieId) {
+		Optional<Actor> actor = actorRepo.findById(actorId);
+		Optional<Movie> movie = movieRepo.findById(movieId.getId());
 		
 		if (!actor.isPresent() || !movie.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -67,7 +49,7 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 	}
 
 	@Override
-	public ResponseEntity<Void> removeActor(Integer movieId, Integer actorId) {
+	public ResponseEntity<Void> removeMovie(Integer actorId, Integer movieId) {
 		if (!actorRepo.existsById(actorId) || !movieRepo.existsById(movieId)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -78,15 +60,13 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 	}
 
 	@Override
-	public ResponseEntity<Object> findCast(Integer id) throws JsonMappingException, JsonProcessingException {
-		Optional<Movie> movie = movieRepo.findById(id);
-		
-		if (!movie.isPresent()) {
+	public ResponseEntity<Object> findAllMovies(Integer id) throws JsonMappingException, JsonProcessingException {
+		Optional<Actor> actor = actorRepo.findById(id);
+		if (!actor.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		LinkedListInter<Actor> cast = movieRepo.findCast(id);
-		return ResponseEntity.ok(cast.formatToJSONObject());
+		LinkedListInter<Movie> movies = actorRepo.findAllMovies(id);
+		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
 
 }
