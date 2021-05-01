@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.moviecatalog.model.Actor;
+import com.moviecatalog.model.ActorMovie;
 import com.moviecatalog.service.ActorService;
 import com.moviecatalog.util.IdForAssociation;
 
@@ -42,7 +43,7 @@ public class ActorController {
 	}
 	
 	@PostMapping("/actor/{id}/add/movie")
-	public ResponseEntity<Object> save(@PathVariable Integer id, @RequestBody IdForAssociation movieId) {
+	public ResponseEntity<ActorMovie> save(@PathVariable Integer id, @RequestBody IdForAssociation movieId) {
 		return actorServ.addMovie(id, movieId);
 	}
 	
