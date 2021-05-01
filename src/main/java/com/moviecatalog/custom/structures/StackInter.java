@@ -6,7 +6,7 @@ public interface StackInter<T> {
 	
 	public T pop() throws Exception;
 	
-	public T peek();
+	public T peek() throws Exception;
 	
 	public boolean isEmpty();
 

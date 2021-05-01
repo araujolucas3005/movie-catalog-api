@@ -1,5 +1,6 @@
 package com.moviecatalog.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -131,11 +132,13 @@ public class Movie implements BaseModel<Movie> {
 	}
 	
 	public String toJSONString() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		
 		return "{" +
 				"\"id\":" + this.id +
 				",\"name\":" + '"' + this.name + '"' +
 				",\"synopsis\":" + '"' + this.synopsis + '"' +
-				",\"releaseDate\":" + '"' + this.releaseDate + '"' +
+				",\"releaseDate\":" + '"' + formatter.format(this.releaseDate) + '"' +
 				",\"companyId\":" + this.companyId +
 				",\"genreId\":" + this.genreId +
 				"}";
