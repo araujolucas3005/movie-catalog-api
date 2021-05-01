@@ -8,6 +8,7 @@ import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.custom.structures.StackInter;
 import com.moviecatalog.custom.structures.impl.SinglyLinkedList;
 import com.moviecatalog.custom.structures.impl.SinglyLinkedStack;
+import com.moviecatalog.model.Actor;
 import com.moviecatalog.model.Movie;
 import com.moviecatalog.repository.custom.CustomMovieRepository;
 
@@ -58,6 +59,28 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 		}
 
 		return movies;
+	}
+
+	@Override
+	public LinkedListInter<Actor> findCast(Integer id) {
+		String query = "select * from actors a where a.id in "
+				+ "(select actor_id from actors_movies am where am.movie_id = " + 
+				id + 
+				")";
+		
+		LinkedListInter<Actor> cast = new SinglyLinkedList<>();
+
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
+
+		while (rs.next()) {
+			Actor actor = new Actor();
+			actor.setId(rs.getInt("id"));
+			actor.setFirstName(rs.getString("first_name"));
+			actor.setLastName(rs.getString("last_name"));
+			cast.add(actor);
+		}
+
+		return cast;
 	}
 
 }
