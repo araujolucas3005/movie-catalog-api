@@ -34,7 +34,7 @@ public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> im
 	}
 	
 	@Override
-	public ResponseEntity<Object> addMovie(Integer actorId, IdForAssociation movieId) {
+	public ResponseEntity<ActorMovie> addMovie(Integer actorId, IdForAssociation movieId) {
 		Optional<Actor> actor = actorRepo.findById(actorId);
 		Optional<Movie> movie = movieRepo.findById(movieId.getId());
 		

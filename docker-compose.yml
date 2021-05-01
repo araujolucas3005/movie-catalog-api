@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    restart: always
+    networks:
+      - movie-catalog
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: movie_catalog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA : /var/lib/postgresql/data
+    volumes:
+      - postgresql-data:/var/lib/postgresql
+
+  api:
+    container_name: api
+    build: ./
+    ports:
+      - 8080:8080    
+    networks:
+      - movie-catalog
+    depends_on:
+      - postgresql            
+          
+volumes:
+  postgresql-data:  
+
+networks: 
+  movie-catalog:
+    driver: bridge
