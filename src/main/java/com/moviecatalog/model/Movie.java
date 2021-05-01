@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -49,11 +51,17 @@ public class Movie implements BaseModel<Movie> {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Genre genre;
 	
-	@Column(name = "company_id", insertable = false, updatable = false)
+	@Transient
 	private Integer companyId;
 	
-	@Column(name = "genre_id", insertable = false, updatable = false)
+	@Transient
 	private Integer genreId;
+	
+	@PostUpdate
+	private void onPostUpdate() {
+		this.genreId = genre.getId();
+		this.companyId = company.getId();
+	}
 
 	public Integer getId() {
 		return id;

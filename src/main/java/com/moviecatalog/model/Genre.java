@@ -1,13 +1,14 @@
 package com.moviecatalog.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -32,8 +33,13 @@ public class Genre implements BaseModel<Genre> {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Genre parentGenre;
 
-	@Column(name = "parent_genre_id", insertable = false, updatable = false)
+	@Transient
 	private Integer parentGenreId;
+	
+	@PostUpdate
+	private void onPostUpdate() {
+		this.parentGenreId = parentGenre != null ? parentGenre.getId() : null;
+	}
 
 	public Integer getId() {
 		return id;
@@ -59,19 +65,8 @@ public class Genre implements BaseModel<Genre> {
 		this.parentGenre = parentGenre != null ? parentGenre : this.parentGenre;
 	}
 
-	public int compareTo(Genre other) {
-		return this.id != null ? id.compareTo(other.getId()) : 1;
-	}
-
-	public void update(Genre source) {
-		if (source != null) {
-			this.setName(source.getName());
-			this.setParentGenre(source.getParentGenre());
-		}
-	}
-
 	public Integer getParentGenreId() {
-		if (parentGenreId == null && parentGenre == null) {
+		if ((parentGenreId == null || parentGenreId == 0) && parentGenre == null) {
 			return null;
 		}
 		return parentGenreId == null ? parentGenre.getId() : parentGenreId;
@@ -80,14 +75,28 @@ public class Genre implements BaseModel<Genre> {
 	public void setParentGenreId(Integer parentGenreId) {
 		this.parentGenreId = parentGenreId;
 	}
+	
+	public void update(Genre source) {
+		if (source != null) {
+			this.setName(source.getName());
+			this.setParentGenre(source.getParentGenre());
+		}
+	}
 
 	@Override
 	public String toJSONString() {
-		return "{" +
+		String result = 
+				"{" +
 				"\"id\":" + this.id +
-				",\"name\":" + '"' + this.name + '"' +
-				",\"parentGenreId\":" + this.parentGenreId +
-				"}";
+				",\"name\":" + '"' + this.name + '"';
+		
+		if (this.parentGenreId != 0 || this.parentGenreId == null) {
+			result += ",\"parentGenreId\":" + this.getParentGenreId();
+		}
+		
+		result += "}";
+		
+		return result;
 	}
 
 }
