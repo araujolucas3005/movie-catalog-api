@@ -36,12 +36,13 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 
 	@Override
 	public LinkedListInter<Movie> findAllMovies(Integer id) {
-		String query = "select * from movies m where m.genre_id = " + id;
-
+		
 		LinkedListInter<Movie> movies = new SinglyLinkedList<>();
-
-		SqlRowSet rs = jdbcTemplate.queryForRowSet(query);
-
+		
+		String firstQuery = "select * from movies where genre_id = " + id;
+		
+		SqlRowSet rs = jdbcTemplate.queryForRowSet(firstQuery);
+		
 		while (rs.next()) {
 			Movie movie = new Movie();
 			movie.setCompanyId(rs.getInt("company_id"));
@@ -51,6 +52,29 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 			movie.setReleaseDate(rs.getDate("release_date"));
 			movie.setSynopsis(rs.getString("synopsis"));
 			movies.add(movie);
+		}
+
+		String secondQuery = "select g.id from genres g where parent_genre_id = " + id;
+
+		SqlRowSet rsOut = jdbcTemplate.queryForRowSet(secondQuery);
+		
+		while (rsOut.next()) {
+			Integer subgenreId = rsOut.getInt("id");
+			
+			String query = "select * from movies where genre_id = " + subgenreId;
+			
+			SqlRowSet rsIn = jdbcTemplate.queryForRowSet(query);
+			
+			while (rsIn.next()) {
+				Movie movie = new Movie();
+				movie.setCompanyId(rsIn.getInt("company_id"));
+				movie.setGenreId(rsIn.getInt("genre_id"));
+				movie.setId(rsIn.getInt("id"));
+				movie.setName(rsIn.getString("name"));
+				movie.setReleaseDate(rsIn.getDate("release_date"));
+				movie.setSynopsis(rsIn.getString("synopsis"));
+				movies.add(movie);
+			}
 		}
 
 		return movies;
