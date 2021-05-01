@@ -1,7 +1,5 @@
 package com.moviecatalog.custom.structures.impl;
 
-import java.util.NoSuchElementException;
-
 import com.moviecatalog.custom.structures.StackInter;
 
 public class SinglyLinkedStack<T> implements StackInter<T> {
@@ -75,11 +73,11 @@ public class SinglyLinkedStack<T> implements StackInter<T> {
 		return removed;
 	}
 
-	public T peek() {
+	public T peek() throws Exception {
 		
 		if (tail == null) {
 			
-			throw new NoSuchElementException("Lista vazia!");
+			throw new Exception("Lista vazia!");
 			
 		}
 		
