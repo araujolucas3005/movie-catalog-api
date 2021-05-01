@@ -65,19 +65,8 @@ public class Genre implements BaseModel<Genre> {
 		this.parentGenre = parentGenre != null ? parentGenre : this.parentGenre;
 	}
 
-	public int compareTo(Genre other) {
-		return this.id != null ? id.compareTo(other.getId()) : 1;
-	}
-
-	public void update(Genre source) {
-		if (source != null) {
-			this.setName(source.getName());
-			this.setParentGenre(source.getParentGenre());
-		}
-	}
-
 	public Integer getParentGenreId() {
-		if (parentGenreId == null && parentGenre == null) {
+		if ((parentGenreId == null || parentGenreId == 0) && parentGenre == null) {
 			return null;
 		}
 		return parentGenreId == null ? parentGenre.getId() : parentGenreId;
@@ -86,14 +75,28 @@ public class Genre implements BaseModel<Genre> {
 	public void setParentGenreId(Integer parentGenreId) {
 		this.parentGenreId = parentGenreId;
 	}
+	
+	public void update(Genre source) {
+		if (source != null) {
+			this.setName(source.getName());
+			this.setParentGenre(source.getParentGenre());
+		}
+	}
 
 	@Override
 	public String toJSONString() {
-		return "{" +
+		String result = 
+				"{" +
 				"\"id\":" + this.id +
-				",\"name\":" + '"' + this.name + '"' +
-				",\"parentGenreId\":" + this.parentGenreId +
-				"}";
+				",\"name\":" + '"' + this.name + '"';
+		
+		if (this.parentGenreId != 0 || this.parentGenreId == null) {
+			result += ",\"parentGenreId\":" + this.getParentGenreId();
+		}
+		
+		result += "}";
+		
+		return result;
 	}
 
 }
