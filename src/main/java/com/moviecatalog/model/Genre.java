@@ -1,6 +1,5 @@
 package com.moviecatalog.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PostUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -33,7 +33,7 @@ public class Genre implements BaseModel<Genre> {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Genre parentGenre;
 
-	@Column(name = "parent_genre_id", insertable = false, updatable = false)
+	@Transient
 	private Integer parentGenreId;
 	
 	@PostUpdate
