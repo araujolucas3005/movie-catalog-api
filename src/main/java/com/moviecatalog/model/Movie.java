@@ -114,7 +114,7 @@ public class Movie implements BaseModel<Movie> {
 	}
 
 	public Integer getCompanyId() {
-		return companyId;
+		return companyId == null ? company.getId() : companyId;
 	}
 
 	public void setCompanyId(Integer companyId) {
@@ -122,7 +122,7 @@ public class Movie implements BaseModel<Movie> {
 	}
 
 	public Integer getGenreId() {
-		return genreId;
+		return genreId == null ? genre.getId() : genreId;
 	}
 
 	public void setGenreId(Integer genreId) {

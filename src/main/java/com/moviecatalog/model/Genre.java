@@ -12,10 +12,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "genres")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Genre implements BaseModel<Genre> {
 
 	@Id
@@ -69,7 +71,7 @@ public class Genre implements BaseModel<Genre> {
 	}
 
 	public Integer getParentGenreId() {
-		return parentGenreId;
+		return parentGenreId == null ? parentGenre.getId() : parentGenreId;
 	}
 
 	public void setParentGenreId(Integer parentGenreId) {

@@ -2,8 +2,11 @@ package com.moviecatalog.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name = "actors")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Actor implements BaseModel<Actor> {
 
     @Id
