@@ -1,5 +1,6 @@
 package com.moviecatalog.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Genre implements BaseModel<Genre> {
 	@SequenceGenerator(name = "SEQ_GENRE", sequenceName = "id_seq_genre", allocationSize = 1)
 	private Integer id;
 
+	@Column(nullable = false)
 	private String name;
 
 	@ManyToOne
