@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,6 +35,11 @@ public class Genre implements BaseModel<Genre> {
 
 	@Column(name = "parent_genre_id", insertable = false, updatable = false)
 	private Integer parentGenreId;
+	
+	@PostUpdate
+	private void onPostUpdate() {
+		this.parentGenreId = parentGenre != null ? parentGenre.getId() : null;
+	}
 
 	public Integer getId() {
 		return id;
