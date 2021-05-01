@@ -71,6 +71,9 @@ public class Genre implements BaseModel<Genre> {
 	}
 
 	public Integer getParentGenreId() {
+		if (parentGenreId == null && parentGenre == null) {
+			return null;
+		}
 		return parentGenreId == null ? parentGenre.getId() : parentGenreId;
 	}
 
