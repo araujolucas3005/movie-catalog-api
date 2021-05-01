@@ -110,6 +110,7 @@ public class Movie implements BaseModel<Movie> {
 			this.setName(source.getName());
 			this.setReleaseDate(source.getReleaseDate());
 			this.setSynopsis(source.getSynopsis());
+			this.setGenre(source.getGenre());
 		}
 	}
 
