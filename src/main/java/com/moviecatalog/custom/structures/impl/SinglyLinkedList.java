@@ -241,7 +241,7 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 
 	}
 
-	public void swap(Node a, Node b) {
+	private void swap(Node a, Node b) {
 
 		T temp = a.data;
 
