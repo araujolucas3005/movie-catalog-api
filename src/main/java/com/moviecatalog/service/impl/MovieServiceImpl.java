@@ -23,46 +23,44 @@ import com.moviecatalog.util.IdForAssociation;
 
 @Service
 public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> implements MovieService {
-	
-	@Autowired private ActorRepository actorRepo;
-	
-	@Autowired private MovieRepository movieRepo;
-	
-	@Autowired private ActorMovieRepository actorMovieRepo;
+
+	@Autowired
+	private ActorRepository actorRepo;
+
+	@Autowired
+	private MovieRepository movieRepo;
+
+	@Autowired
+	private ActorMovieRepository actorMovieRepo;
 
 	@Override
 	public ResponseEntity<Object> removeOldests(Integer quantity) throws Exception {
 		StackInter<Movie> movies = movieRepo.findAllAsStackOrderedByDateDesc();
-		
+
 		LinkedListInter<Movie> deletedMovies = new SinglyLinkedList<>();
-		
+
 		while (!movies.isEmpty() && quantity > 0) {
 			Movie deletedMovie = movies.pop();
 			deletedMovies.add(deletedMovie);
 			movieRepo.deleteById(deletedMovie.getId());
 			quantity--;
 		}
-		
-		return ResponseEntity.ok(deletedMovies.formatToJSONObject());
-	}
 
-	@Override
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
-		return movieRepo.findAllAsLinkedList().formatToJSONObject();
+		return ResponseEntity.ok(deletedMovies.formatToJSONObject());
 	}
 
 	@Override
 	public ResponseEntity<ActorMovie> addActor(Integer movieId, IdForAssociation actorId) {
 		Optional<Actor> actor = actorRepo.findById(actorId.getId());
 		Optional<Movie> movie = movieRepo.findById(movieId);
-		
+
 		if (!actor.isPresent() || !movie.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		ActorMovie association = new ActorMovie(actor.get(), movie.get());
 		association = actorMovieRepo.save(association);
-		
+
 		return ResponseEntity.ok().body(association);
 	}
 
@@ -71,20 +69,20 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 		if (!actorRepo.existsById(actorId) || !movieRepo.existsById(movieId)) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		actorMovieRepo.deleteById(new ActorMovieId(actorId, movieId));
-		
+
 		return ResponseEntity.noContent().build();
 	}
 
 	@Override
 	public ResponseEntity<Object> findCast(Integer id) throws JsonMappingException, JsonProcessingException {
 		Optional<Movie> movie = movieRepo.findById(id);
-		
+
 		if (!movie.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		LinkedListInter<Actor> cast = movieRepo.findCast(id);
 		return ResponseEntity.ok(cast.formatToJSONObject());
 	}

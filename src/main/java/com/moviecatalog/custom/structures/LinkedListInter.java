@@ -1,5 +1,7 @@
 package com.moviecatalog.custom.structures;
 
+import javax.management.AttributeNotFoundException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -16,5 +18,9 @@ public interface LinkedListInter<T> {
 	public T removeLast() throws Exception;
 	
 	public Object formatToJSONObject() throws JsonMappingException, JsonProcessingException;
+	
+	public void sortAsc(String attribute) throws AttributeNotFoundException;
+	
+	public void sortDesc(String attribute) throws AttributeNotFoundException;
 
 }

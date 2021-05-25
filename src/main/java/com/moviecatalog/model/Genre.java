@@ -1,5 +1,6 @@
 package com.moviecatalog.model;
 
+import javax.management.AttributeNotFoundException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,12 @@ public class Genre implements BaseModel<Genre> {
 
 	@Transient
 	private Integer parentGenreId;
+	
+	public static final String BY_ID = "id";
+	
+	public static final String BY_NAME = "name";
+	
+	public static final String BY_PARENT_GENRE = "parentGenre";
 	
 	@PostUpdate
 	private void onPostUpdate() {
@@ -83,6 +90,19 @@ public class Genre implements BaseModel<Genre> {
 			this.setName(source.getName());
 			this.setParentGenre(source.getParentGenre());
 		}
+	}
+	
+	@Override
+	public Integer compareTo(Genre other, String attribute) throws AttributeNotFoundException {
+		switch (attribute) {
+			case BY_NAME:
+				return name.compareTo(other.name);
+			case BY_ID:
+				return id.compareTo(other.id);
+			case BY_PARENT_GENRE:
+				return parentGenreId.compareTo(other.parentGenreId);
+		}
+		throw new AttributeNotFoundException("Esse atributo não existe");
 	}
 
 	@Override

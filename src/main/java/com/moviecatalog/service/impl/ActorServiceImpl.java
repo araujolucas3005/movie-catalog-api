@@ -21,30 +21,28 @@ import com.moviecatalog.util.IdForAssociation;
 
 @Service
 public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> implements ActorService {
-	
-	@Autowired private ActorRepository actorRepo;
-	
-	@Autowired private MovieRepository movieRepo;
-	
-	@Autowired private ActorMovieRepository actorMovieRepo;
 
-	@Override
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
-		return actorRepo.findAllAsLinkedList().formatToJSONObject();
-	}
-	
+	@Autowired
+	private ActorRepository actorRepo;
+
+	@Autowired
+	private MovieRepository movieRepo;
+
+	@Autowired
+	private ActorMovieRepository actorMovieRepo;
+
 	@Override
 	public ResponseEntity<ActorMovie> addMovie(Integer actorId, IdForAssociation movieId) {
 		Optional<Actor> actor = actorRepo.findById(actorId);
 		Optional<Movie> movie = movieRepo.findById(movieId.getId());
-		
+
 		if (!actor.isPresent() || !movie.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		ActorMovie association = new ActorMovie(actor.get(), movie.get());
 		association = actorMovieRepo.save(association);
-		
+
 		return ResponseEntity.ok().body(association);
 	}
 
@@ -53,9 +51,9 @@ public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> im
 		if (!actorRepo.existsById(actorId) || !movieRepo.existsById(movieId)) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		actorMovieRepo.deleteById(new ActorMovieId(actorId, movieId));
-		
+
 		return ResponseEntity.noContent().build();
 	}
 

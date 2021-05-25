@@ -16,8 +16,9 @@ import com.moviecatalog.service.CompanyService;
 
 @Service
 public class CompanyServiceImpl extends BaseServiceImpl<Company, CompanyRepository> implements CompanyService {
-	
-	@Autowired private CompanyRepository compRepo;
+
+	@Autowired
+	private CompanyRepository compRepo;
 
 	public ResponseEntity<Object> findAllMovies(Integer id) throws JsonMappingException, JsonProcessingException {
 		Optional<Company> company = compRepo.findById(id);
@@ -28,9 +29,4 @@ public class CompanyServiceImpl extends BaseServiceImpl<Company, CompanyReposito
 		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
 
-	@Override
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
-		return compRepo.findAllAsLinkedList().formatToJSONObject();
-	}
-	
 }

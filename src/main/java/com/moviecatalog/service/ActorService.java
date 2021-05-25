@@ -9,8 +9,6 @@ import com.moviecatalog.model.ActorMovie;
 import com.moviecatalog.util.IdForAssociation;
 
 public interface ActorService extends BaseService<Actor> {
-	
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException;
 
 	ResponseEntity<ActorMovie> addMovie(Integer actorId, IdForAssociation movieId);
 	

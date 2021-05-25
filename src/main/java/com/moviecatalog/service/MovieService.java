@@ -17,7 +17,5 @@ public interface MovieService extends BaseService<Movie> {
 	public ResponseEntity<Void> removeActor(Integer movieId, Integer actorId);
 	
 	public ResponseEntity<Object> findCast(Integer id) throws JsonMappingException, JsonProcessingException;
-	
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException;
 
 }

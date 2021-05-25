@@ -3,6 +3,7 @@ package com.moviecatalog.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.management.AttributeNotFoundException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,6 +57,16 @@ public class Movie implements BaseModel<Movie> {
 	
 	@Transient
 	private Integer genreId;
+	
+	public static final String BY_ID = "id";
+	
+	public static final String BY_NAME = "name";
+	
+	public static final String BY_RELEASE_DATE = "releaseDate";
+	
+	public static final String BY_COMPANY = "company";
+	
+	public static final String BY_GENRE = "genre";
 	
 	@PostUpdate
 	private void onPostUpdate() {
@@ -137,6 +148,23 @@ public class Movie implements BaseModel<Movie> {
 
 	public void setGenreId(Integer genreId) {
 		this.genreId = genreId;
+	}
+
+	@Override
+	public Integer compareTo(Movie other, String attribute) throws AttributeNotFoundException {
+		switch (attribute) {
+			case BY_NAME:
+				return name.compareTo(other.name);
+			case BY_ID:
+				return id.compareTo(other.id);
+			case BY_RELEASE_DATE:
+				return releaseDate.compareTo(other.releaseDate);
+			case BY_COMPANY:
+				return companyId.compareTo(other.companyId);
+			case BY_GENRE:
+				return genreId.compareTo(other.genreId);
+		}
+		throw new AttributeNotFoundException("Esse atributo não existe");
 	}
 	
 	public String toJSONString() {
