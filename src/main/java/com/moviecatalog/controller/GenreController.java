@@ -25,9 +25,11 @@ public class GenreController {
 	private GenreService genreServ;
 
 	@GetMapping("/genres")
-	public Object index(@RequestParam(defaultValue = "id") String sortBy)
+	public Object index(
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
 			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
-		return genreServ.findAllAndSort(sortBy);
+		return genreServ.findAllAndSort(sortBy, order);
 	}
 
 	@GetMapping("/genre/{id}")

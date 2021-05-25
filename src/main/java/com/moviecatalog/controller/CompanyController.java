@@ -25,9 +25,11 @@ public class CompanyController {
 	private CompanyService compServ;
 
 	@GetMapping("/companies")
-	public Object index(@RequestParam(defaultValue = "id") String sortBy)
+	public Object index(
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
 			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
-		return compServ.findAllAndSort(sortBy);
+		return compServ.findAllAndSort(sortBy, order);
 	}
 
 	@GetMapping("/company/{id}")

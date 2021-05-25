@@ -17,6 +17,6 @@ public interface BaseService<T> {
 	
 	public ResponseEntity<T> update(Integer id, T entity);
 	
-	public Object findAllAndSort(String attribute) throws JsonMappingException, JsonProcessingException, AttributeNotFoundException;
+	public Object findAllAndSort(String attribute, String order) throws JsonMappingException, JsonProcessingException, AttributeNotFoundException;
 
 }

@@ -181,7 +181,7 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 		return "[" + result + "]";
 	}
 
-	public void sort(String attribute) throws AttributeNotFoundException {
+	public void sortAsc(String attribute) throws AttributeNotFoundException {
 
 		Node ref = head;
 		
@@ -196,6 +196,36 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 				while (index != null) {
 
 					if (ref.data.compareTo(index.data, attribute) > 0) {
+						
+						swap(ref, index);
+						
+					}
+
+					index = index.next;
+				}
+				
+				ref = ref.next;
+			}
+			
+		}
+
+	}
+	
+	public void sortDesc(String attribute) throws AttributeNotFoundException {
+
+		Node ref = head;
+		
+		Node index = null;
+
+		if (head != null) {
+			
+			while (ref != null) {
+				
+				index = ref.next;
+
+				while (index != null) {
+
+					if (ref.data.compareTo(index.data, attribute) < 0) {
 						
 						swap(ref, index);
 						

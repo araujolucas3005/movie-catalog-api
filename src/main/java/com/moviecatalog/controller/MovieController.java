@@ -27,9 +27,11 @@ public class MovieController {
 	private MovieService movieServ;
 
 	@GetMapping("/movies")
-	public Object index(@RequestParam(defaultValue = "id") String sortBy)
+	public Object index(
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
 			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
-		return movieServ.findAllAndSort(sortBy);
+		return movieServ.findAllAndSort(sortBy, order);
 	}
 
 	@GetMapping("/movie/{id}")

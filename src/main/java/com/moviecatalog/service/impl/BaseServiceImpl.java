@@ -23,10 +23,16 @@ public abstract class BaseServiceImpl<T extends BaseModel<T>, Repository extends
 	}
 
 	@Override
-	public Object findAllAndSort(String attribute)
+	public Object findAllAndSort(String attribute, String order)
 			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
 		LinkedListInter<T> entities = repo.findAllAsLinkedList();
-		entities.sort(attribute);
+		if (order.equals("desc")) {
+			entities.sortDesc(attribute);
+		} else if (order.equals("asc")) {
+			entities.sortAsc(attribute);
+		} else {
+			throw new AttributeNotFoundException("order só pode ser \"asc\" ou \"desc\"");
+		}
 		return entities.formatToJSONObject();
 	}
 

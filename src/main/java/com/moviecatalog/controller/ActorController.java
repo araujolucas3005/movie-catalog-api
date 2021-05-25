@@ -27,9 +27,11 @@ public class ActorController {
 	private ActorService actorServ;
 
 	@GetMapping("/actors")
-	public Object index(@RequestParam(defaultValue = "id") String sortBy)
+	public Object index(
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
 			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
-		return actorServ.findAllAndSort(sortBy);
+		return actorServ.findAllAndSort(sortBy, order);
 	}
 
 	@GetMapping("/actor/{id}")
