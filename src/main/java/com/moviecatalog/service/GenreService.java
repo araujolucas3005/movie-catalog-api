@@ -11,7 +11,5 @@ public interface GenreService extends BaseService<Genre> {
 	public ResponseEntity<Object> findAllSubgenres(Integer id) throws JsonMappingException, JsonProcessingException;
 	
 	public ResponseEntity<Object> findAllMovies(Integer id) throws JsonMappingException, JsonProcessingException;
-		
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException;
 
 }

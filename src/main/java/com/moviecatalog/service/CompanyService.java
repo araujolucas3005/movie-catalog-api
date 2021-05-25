@@ -9,7 +9,5 @@ import com.moviecatalog.model.Company;
 public interface CompanyService extends BaseService<Company> {
 	
 	public ResponseEntity<Object> findAllMovies(Integer id) throws JsonMappingException, JsonProcessingException;
-	
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException;
 
 }

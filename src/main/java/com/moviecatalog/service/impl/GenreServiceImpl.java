@@ -16,8 +16,9 @@ import com.moviecatalog.service.GenreService;
 
 @Service
 public class GenreServiceImpl extends BaseServiceImpl<Genre, GenreRepository> implements GenreService {
-	
-	@Autowired private GenreRepository genreRepo;
+
+	@Autowired
+	private GenreRepository genreRepo;
 
 	@Override
 	public ResponseEntity<Object> findAllSubgenres(Integer id) throws JsonMappingException, JsonProcessingException {
@@ -39,9 +40,4 @@ public class GenreServiceImpl extends BaseServiceImpl<Genre, GenreRepository> im
 		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
 
-	@Override
-	public Object findAllAsLinkedList() throws JsonMappingException, JsonProcessingException {
-		return genreRepo.findAllAsLinkedList().formatToJSONObject();
-	}
-	
 }

@@ -4,12 +4,10 @@ import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.model.Genre;
 import com.moviecatalog.model.Movie;
 
-public interface CustomGenreRepository {
+public interface CustomGenreRepository extends BaseCustomRepository<Genre> {
 	
 	public LinkedListInter<Genre> findAllSubgenres(Integer id);
 	
 	public LinkedListInter<Movie> findAllMovies(Integer id);
-	
-	public LinkedListInter<Genre> findAllAsLinkedList();
 
 }
