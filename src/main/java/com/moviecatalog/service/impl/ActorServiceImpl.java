@@ -2,6 +2,7 @@ package com.moviecatalog.service.impl;
 
 import java.util.Optional;
 
+import com.moviecatalog.custom.structures.DoublyLinkedListInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class ActorServiceImpl extends BaseServiceImpl<Actor, ActorRepository> im
 		if (!actor.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		LinkedListInter<Movie> movies = actorRepo.findAllMovies(id);
+		DoublyLinkedListInter<Movie> movies = actorRepo.findAllMovies(id);
 		return ResponseEntity.ok(movies.formatToJSONObject());
 	}
 
