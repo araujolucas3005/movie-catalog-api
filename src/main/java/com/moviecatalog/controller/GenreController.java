@@ -38,15 +38,21 @@ public class GenreController {
 	}
 
 	@GetMapping("/genre/{id}/subgenres")
-	public ResponseEntity<Object> findAllSubgenres(@PathVariable Integer id)
-			throws JsonMappingException, JsonProcessingException {
-		return genreServ.findAllSubgenres(id);
+	public ResponseEntity<Object> findAllSubgenres(
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
+			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
+		return genreServ.findAllSubgenres(id, sortBy, order);
 	}
 
 	@GetMapping("/genre/{id}/movies")
-	public ResponseEntity<Object> findAllMovies(@PathVariable Integer id)
-			throws JsonMappingException, JsonProcessingException {
-		return genreServ.findAllMovies(id);
+	public ResponseEntity<Object> findAllMovies(
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "asc") String order)
+			throws JsonMappingException, JsonProcessingException, AttributeNotFoundException {
+		return genreServ.findAllMovies(id, sortBy, order);
 	}
 
 	@PostMapping("/genre")
