@@ -1,5 +1,7 @@
 package com.moviecatalog.custom.structures.impl;
 
+import java.util.NoSuchElementException;
+
 import javax.management.AttributeNotFoundException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -181,60 +183,58 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 		return "[" + result + "]";
 	}
 
-	public void sortAsc(String attribute) throws AttributeNotFoundException {
+	public void sort(String attribute, String order) throws AttributeNotFoundException {
 
 		Node ref = head;
 		
 		Node index = null;
-
-		if (head != null) {
-			
-			while (ref != null) {
-				
-				index = ref.next;
-
-				while (index != null) {
-
-					if (ref.data.compareTo(index.data, attribute) > 0) {
-						
-						swap(ref, index);
-						
-					}
-
-					index = index.next;
-				}
-				
-				ref = ref.next;
-			}
-			
-		}
-
-	}
-	
-	public void sortDesc(String attribute) throws AttributeNotFoundException {
-
-		Node ref = head;
 		
-		Node index = null;
-
 		if (head != null) {
 			
-			while (ref != null) {
+			if (order.equals("asc")) {
 				
-				index = ref.next;
+				while (ref != null) {
+					
+					index = ref.next;
 
-				while (index != null) {
+					while (index != null) {
 
-					if (ref.data.compareTo(index.data, attribute) < 0) {
-						
-						swap(ref, index);
-						
+						if (ref.data.compareTo(index.data, attribute) > 0) {
+							
+							swap(ref, index);
+							
+						}
+
+						index = index.next;
 					}
-
-					index = index.next;
+					
+					ref = ref.next;
 				}
 				
-				ref = ref.next;
+			} else if (order.equals("desc")) {
+				
+				while (ref != null) {
+					
+					index = ref.next;
+
+					while (index != null) {
+
+						if (ref.data.compareTo(index.data, attribute) < 0) {
+							
+							swap(ref, index);
+							
+						}
+
+						index = index.next;
+					}
+					
+					ref = ref.next;
+				}
+				
+			} else {
+				
+				throw new NoSuchElementException("order deve ser \"asc\" ou \"desc\"");
+				
 			}
 			
 		}

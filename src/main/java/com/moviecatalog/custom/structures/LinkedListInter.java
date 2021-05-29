@@ -19,8 +19,6 @@ public interface LinkedListInter<T> {
 	
 	public Object formatToJSONObject() throws JsonMappingException, JsonProcessingException;
 	
-	public void sortAsc(String attribute) throws AttributeNotFoundException;
-	
-	public void sortDesc(String attribute) throws AttributeNotFoundException;
+	public void sort(String attribute, String order) throws AttributeNotFoundException;
 
 }
