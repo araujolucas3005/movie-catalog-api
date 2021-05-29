@@ -38,7 +38,7 @@ public class Movie implements BaseModel<Movie> {
 	@Column(nullable = false)
 	private String synopsis;
 	
-	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(nullable = false)
 	private Date releaseDate;
 	
@@ -168,7 +168,7 @@ public class Movie implements BaseModel<Movie> {
 	}
 	
 	public String toJSONString() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		
 		return "{" +
 				"\"id\":" + this.id +

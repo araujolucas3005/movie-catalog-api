@@ -21,7 +21,7 @@ public class Company implements BaseModel<Company> {
 	@SequenceGenerator(name = "SEQ_COMPANY", sequenceName = "id_seq_company", allocationSize = 1)
 	private Integer id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	public static final String BY_ID = "id";
