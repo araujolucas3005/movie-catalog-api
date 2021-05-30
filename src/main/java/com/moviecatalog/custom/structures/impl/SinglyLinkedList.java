@@ -14,9 +14,11 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 
 	public class Node {
 
-		public T data;
+		T data;
 
-		public Node next;
+		Node next;
+
+		int id;
 
 		public Node(T data) {
 
@@ -42,7 +44,27 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 
 	}
 
-	public void add(T data) {
+	public void addFirst(T data) {
+
+		Node newNode = new Node(data);
+
+		if (head == null) {
+
+			head = newNode;
+
+			tail = newNode;
+
+		} else {
+
+			newNode.next = head;
+
+			head = newNode;
+		}
+
+		size++;
+	}
+
+	public void addLast(T data) {
 
 		Node newNode = new Node(data);
 
@@ -186,57 +208,57 @@ public class SinglyLinkedList<T extends BaseModel<T>> implements LinkedListInter
 	public void sort(String attribute, String order) throws AttributeNotFoundException {
 
 		Node ref = head;
-		
+
 		Node index = null;
-		
+
 		if (head != null) {
-			
+
 			if (order.equals("asc")) {
-				
+
 				while (ref != null) {
-					
+
 					index = ref.next;
 
 					while (index != null) {
 
 						if (ref.data.compareTo(index.data, attribute) > 0) {
-							
+
 							swap(ref, index);
-							
+
 						}
 
 						index = index.next;
 					}
-					
+
 					ref = ref.next;
 				}
-				
+
 			} else if (order.equals("desc")) {
-				
+
 				while (ref != null) {
-					
+
 					index = ref.next;
 
 					while (index != null) {
 
 						if (ref.data.compareTo(index.data, attribute) < 0) {
-							
+
 							swap(ref, index);
-							
+
 						}
 
 						index = index.next;
 					}
-					
+
 					ref = ref.next;
 				}
-				
+
 			} else {
-				
+
 				throw new NoSuchElementException("order deve ser \"asc\" ou \"desc\"");
-				
+
 			}
-			
+
 		}
 
 	}

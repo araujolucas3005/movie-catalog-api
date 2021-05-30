@@ -31,7 +31,7 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 			movie.setName(rs.getString("name"));
 			movie.setReleaseDate(rs.getDate("release_date"));
 			movie.setSynopsis(rs.getString("synopsis"));
-			movies.add(movie);
+			movies.addLast(movie);
 		}
 
 		return movies;
@@ -49,7 +49,7 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 			Company company = new Company();
 			company.setId(rs.getInt("id"));
 			company.setName(rs.getString("name"));
-			companies.add(company);
+			companies.addLast(company);
 		}
 
 		return companies;

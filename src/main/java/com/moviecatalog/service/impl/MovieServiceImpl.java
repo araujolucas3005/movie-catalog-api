@@ -41,7 +41,7 @@ public class MovieServiceImpl extends BaseServiceImpl<Movie, MovieRepository> im
 
 		while (!movies.isEmpty() && quantity > 0) {
 			Movie deletedMovie = movies.pop();
-			deletedMovies.add(deletedMovie);
+			deletedMovies.addLast(deletedMovie);
 			movieRepo.deleteById(deletedMovie.getId());
 			quantity--;
 		}

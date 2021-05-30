@@ -48,7 +48,7 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 			genre.setId(rs.getInt("id"));
 			genre.setName(rs.getString("name"));
 			genre.setParentGenreId(rs.getInt("parent_genre_id"));
-			genres.add(genre);
+			genres.addLast(genre);
 		}
 
 		return genres;
@@ -65,7 +65,7 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 			subgenre.setId(rs.getInt("id"));
 			subgenre.setName(rs.getString("name"));
 			subgenre.setParentGenreId(rs.getInt("parent_genre_id"));
-			subgenres.add(subgenre);
+			subgenres.addLast(subgenre);
 			
 			getSubgenres(subgenres, subgenre.getId());
 		}
@@ -86,7 +86,7 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository {
 			movie.setName(rs.getString("name"));
 			movie.setReleaseDate(rs.getDate("release_date"));
 			movie.setSynopsis(rs.getString("synopsis"));
-			movies.add(movie);
+			movies.addLast(movie);
 		}
 		
 		query = "select id from genres g where g.parent_genre_id = " + id;

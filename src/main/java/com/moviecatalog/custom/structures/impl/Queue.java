@@ -45,7 +45,8 @@ public class Queue<T> implements QueueInter<T> {
             }
         }
 
-        public T dequeue() {
+        @SuppressWarnings("unchecked")
+		public T dequeue() {
             T saida = null;
             if (!isEmpty()) {
                 saida = (T) elementos[inicio];
@@ -59,7 +60,8 @@ public class Queue<T> implements QueueInter<T> {
             return saida;
         }
 
-        public T peek() {
+        @SuppressWarnings("unchecked")
+		public T peek() {
             if (isEmpty()) {
                 return null;
             }
