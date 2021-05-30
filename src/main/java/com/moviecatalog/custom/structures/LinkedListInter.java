@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public interface LinkedListInter<T> {
 	
-	public void add(T t);
+	public void addFirst(T t);
+	
+	public void addLast(T t);
 	
 	public T peekFirst() throws Exception;
 	

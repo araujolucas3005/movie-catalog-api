@@ -55,7 +55,7 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 			movie.setName(rs.getString("name"));
 			movie.setReleaseDate(rs.getDate("release_date"));
 			movie.setSynopsis(rs.getString("synopsis"));
-			movies.add(movie);
+			movies.addLast(movie);
 		}
 
 		return movies;
@@ -77,7 +77,7 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 			actor.setId(rs.getInt("id"));
 			actor.setFirstName(rs.getString("first_name"));
 			actor.setLastName(rs.getString("last_name"));
-			cast.add(actor);
+			cast.addLast(actor);
 		}
 
 		return cast;

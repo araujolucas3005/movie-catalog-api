@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.moviecatalog.custom.structures.LinkedListInter;
 import com.moviecatalog.model.Actor;
 import com.moviecatalog.model.ActorMovie;
 import com.moviecatalog.model.ActorMovieId;

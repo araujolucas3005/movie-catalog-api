@@ -34,7 +34,7 @@ public class CustomActorRepositoryImpl implements CustomActorRepository {
 			actor.setId(rs.getInt("id"));
 			actor.setFirstName(rs.getString("first_name"));
 			actor.setLastName(rs.getString("last_name"));
-			actors.add(actor);
+			actors.addLast(actor);
 		}
 
 		return actors;
@@ -83,7 +83,6 @@ public class CustomActorRepositoryImpl implements CustomActorRepository {
 		DoublyLinkedListInter<Movie> linedMovies = new DoublyLinkedList<>();
 
 		for (int i = 0; i < size; i++) {
-			Movie movie = new Movie();
 			linedMovies.pushLast(movies.searchPosition(ids[i]));
 		}
 
